@@ -1,19 +1,25 @@
-import React, { Component } from 'react'
-import { Form, Row, Col, Input, Button, Table, Divider } from 'antd'
+import React, { Component } from 'react';
+import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker } from 'antd';
+import { Link, Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
+const RangePicker = DatePicker.RangePicker;
 
 class Home extends Component {
 	state = {
 		data: [],
-		loading: false
+		currentTime: new Date(),
+		loading: false,
+		addItem: false
 	}
 
 	componentDidMount() {
 		this.getDataSource();
 	}
 
-	getFields() {
+	getFields = () => {
 		const children = [];
 		const { getFieldDecorator } = this.props.form;
 		for(let i=0; i < 10; i++) {
@@ -29,7 +35,36 @@ class Home extends Component {
 				</Col>
 			)
 		}
+		children.push(
+			<Col span={6} key={100}>
+				<Select defaultValue="lucy" style={{ width: 120 }} allowClear placeholder="--请选择--" onChange={this.handleSelectChange}>
+			      <Option value="jack">Jack</Option>
+			      <Option value="lucy">Lucy</Option>
+			      <Option value="disabled" disabled>Disabled</Option>
+			      <Option value="Yiminghe">yiminghe</Option>
+			    </Select>
+		    </Col>
+		)
+		children.push(
+			<Col span={6} key={101}>
+				<RangePicker onChange={this.handleRangePickerChange} defaultValue={[moment(this.state.currentTime, 'yyyy-MM-dd')]}/>
+			</Col>
+		)
 		return children;
+	}
+
+	handleSelectChange  = (value, option) => {
+		console.log(value, option);
+	}
+
+	handleRangePickerChange = (date, dateStr) => {
+		console.log(date, dateStr);
+	}
+
+	addItem = () => {
+		this.setState({
+			addItem: true
+		})
 	}
 
 	getDataSource = () => {
@@ -89,7 +124,7 @@ class Home extends Component {
 				  key: '10',
 				  name: '胡彦祖',
 				  age: 42,
-				  address: '西湖区湖底公园1号'
+				  address: '西湖区湖底公园12号'
 				}]
 			})
 		}, 1000)
@@ -112,12 +147,15 @@ class Home extends Component {
 	}
 
 	render() {
+		if(this.state.addItem) {
+			return <Redirect to="/itemAdd"/>
+		} 
 		return (
 			<div>
 				<Form>
 					<Row>
 						<Button type="primary" onClick={this.getDataSource}>查询</Button>
-						<Button>新增</Button>
+						<Button onClick={this.addItem}>新增</Button>
 					</Row>
 					<Row gutter={ 24 }>{ this.getFields() }</Row>
 				</Form>

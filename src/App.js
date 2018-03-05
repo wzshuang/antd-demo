@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import WrappedLoginForm from './Login.js';
-import Home from './Home.js';
+import WrappedLoginForm from './Login';
+import Home from './Home';
+import ItemAdd from './ItemAdd';
+
 import {
   HashRouter as Router,
   Route,
@@ -15,8 +17,9 @@ class App extends Component {
 		return (
 			<Router>
 				<div>
-					<Route exact path="/" component={WrappedLoginForm}/>
-					<Route path="/home" component={Home}/>
+					<Route exact path="/" component={WrappedLoginForm} />
+					<Route path="/home" component={Home} />
+					<Route path="/itemAdd" component={ItemAdd} />
 				</div>
 			</Router>
     );
