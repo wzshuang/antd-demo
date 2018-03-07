@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import WrappedLoginForm from './Login';
 import Home from './Home';
 import ItemAdd from './ItemAdd';
 
 import {
   HashRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 import './App.css';

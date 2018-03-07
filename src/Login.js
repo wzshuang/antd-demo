@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Alert, Button, Checkbox, Modal, message } from 'antd';
-import { Link, Redirect } from 'react-router-dom';
+import { Form, Icon, Input, Alert, Button} from 'antd';
+import { Redirect } from 'react-router-dom';
 
 const FormItem = Form.Item;
 
@@ -23,7 +23,7 @@ class LoginForm extends Component {
 					this.setState({
 						loading: false
 					})
-					if(values.username == "007@00000" && values.password == "123456") {
+					if(values.username === "007@00000" && values.password === "123456") {
 						// Modal.success({
 						//     title: '提示',
 						//     content: values.username + ' 登录成功',

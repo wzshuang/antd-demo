@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker } from 'antd';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 const FormItem = Form.Item;
