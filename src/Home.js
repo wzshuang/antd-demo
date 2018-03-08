@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker } from 'antd';
-import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 const FormItem = Form.Item;
@@ -11,8 +10,7 @@ class Home extends Component {
 	state = {
 		data: [],
 		currentTime: new Date(),
-		loading: false,
-		addItem: false
+		loading: false
 	}
 
 	componentDidMount() {
@@ -62,9 +60,7 @@ class Home extends Component {
 	}
 
 	addItem = () => {
-		this.setState({
-			addItem: true
-		})
+		this.props.history.push('/itemAdd?id=3');
 	}
 
 	getDataSource = () => {
@@ -147,9 +143,6 @@ class Home extends Component {
 	}
 
 	render() {
-		if(this.state.addItem) {
-			return <Redirect to="/itemAdd"/>
-		} 
 		return (
 			<div>
 				<Form>
