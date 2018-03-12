@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker } from 'antd';
+import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker, Modal } from 'antd';
 import moment from 'moment';
+import ItemAddForm from './ItemAddForm';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -10,7 +12,8 @@ class Home extends Component {
 	state = {
 		data: [],
 		currentTime: new Date(),
-		loading: false
+		loading: false,
+		addItemModalVisible: false
 	}
 
 	componentDidMount() {
@@ -60,7 +63,32 @@ class Home extends Component {
 	}
 
 	addItem = () => {
-		this.props.history.push('/itemAdd?id=3');
+		//this.props.history.push('/itemAdd?id=3');
+		this.setState({
+			addItemModalVisible: true
+		})
+	}
+
+	cancelAddItem = () => {
+		this.setState({
+			addItemModalVisible: false
+		})
+	}
+	confirmAddItem = () => {
+		this.setState({
+			addItemModalVisible: false
+		})
+		const form = this.form;
+		form.validateFields((err, values) => {
+			if(err) return;
+			form.resetFields();
+			this.setState({
+				addItemModalVisible: false
+			})
+		})
+	}
+	saveFormRef = (form) => {
+		this.form = form
 	}
 
 	getDataSource = () => {
@@ -143,12 +171,19 @@ class Home extends Component {
 	}
 
 	render() {
+		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
 				<Form>
 					<Row>
 						<Button type="primary" onClick={this.getDataSource}>查询</Button>
 						<Button onClick={this.addItem}>新增</Button>
+						<ItemAddForm 
+							ref={this.saveFormRef}
+							visible={this.state.addItemModalVisible} 
+							onCancel={this.cancelAddItem}
+							onOk={this.confirmAddItem}
+							/>
 					</Row>
 					<Row gutter={ 24 }>{ this.getFields() }</Row>
 				</Form>
