@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker, Modal } from 'antd';
+import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker} from 'antd';
 import moment from 'moment';
 import ItemAddForm from './ItemAddForm';
 
@@ -75,15 +75,21 @@ class Home extends Component {
 		})
 	}
 	confirmAddItem = () => {
-		this.setState({
-			addItemModalVisible: false
-		})
 		const form = this.form;
 		form.validateFields((err, values) => {
 			if(err) return;
 			form.resetFields();
+			const { data } = this.state;
+			console.log(values, data);
+			data.unshift({
+				key: data.length+1,
+				name: values.name,
+				age: values.age,
+				address: values.address
+			})
 			this.setState({
-				addItemModalVisible: false
+				addItemModalVisible: false,
+				data: data
 			})
 		})
 	}
@@ -96,7 +102,6 @@ class Home extends Component {
 			loading: true
 		})
 		setTimeout(()=>{
-			console.log("setTimeout.....");
 			this.setState({
 				loading: false,
 				data: [{
@@ -171,7 +176,6 @@ class Home extends Component {
 	}
 
 	render() {
-		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
 				<Form>
@@ -185,7 +189,7 @@ class Home extends Component {
 							onOk={this.confirmAddItem}
 							/>
 					</Row>
-					<Row gutter={ 24 }>{ this.getFields() }</Row>
+					<Row type="flex" justify="space-around">{ this.getFields() }</Row>
 				</Form>
 
 				<Divider />
