@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker} from 'antd';
+import { Form, Row, Col, Input, Button, Table, Divider, Select, DatePicker, Layout, Menu} from 'antd';
 import moment from 'moment';
 import ItemAddForm from './ItemAddForm';
 
@@ -7,6 +7,7 @@ import ItemAddForm from './ItemAddForm';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
+const { Header, Content, Footer } = Layout;
 
 class Home extends Component {
 	state = {
@@ -177,25 +178,38 @@ class Home extends Component {
 
 	render() {
 		return (
-			<div>
-				<Form>
-					<Row>
-						<Button type="primary" onClick={this.getDataSource}>查询</Button>
-						<Button onClick={this.addItem}>新增</Button>
-						<ItemAddForm 
-							ref={this.saveFormRef}
-							visible={this.state.addItemModalVisible} 
-							onCancel={this.cancelAddItem}
-							onOk={this.confirmAddItem}
-							/>
-					</Row>
-					<Row type="flex" justify="space-around">{ this.getFields() }</Row>
-				</Form>
+			<Layout className="layout">
+				<Header >
+					<Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} style={{ lineHeight: '64px' }}>
+						<Menu.Item key="1">用户管理</Menu.Item>
+						<Menu.Item key="2">订单管理</Menu.Item>
+						<Menu.Item key="3">系统设置</Menu.Item>
+					</Menu>
+				</Header>
+				<Content style={{ padding: '20px' }}>
+					<Form>
+						<Row>
+							<Button type="primary" onClick={this.getDataSource}>查询</Button>
+							<Button onClick={this.addItem} style={{ marginLeft: '20px' }} >新增</Button>
+							<ItemAddForm 
+								ref={this.saveFormRef}
+								visible={this.state.addItemModalVisible} 
+								onCancel={this.cancelAddItem}
+								onOk={this.confirmAddItem}
+								/>
+						</Row>
+						<Row type="flex" justify="space-around">{ this.getFields() }</Row>
+					</Form>
 
-				<Divider />
+					<Divider />
 
-				<Table loading={this.state.loading} dataSource={this.state.data} columns={this.getColumns()} />
-			</div>
+					<Table loading={this.state.loading} dataSource={this.state.data} columns={this.getColumns()} />
+				</Content>
+				<Footer style={{ textAlign: 'center' }}>
+					北京市朝阳区信息技术有限公司
+				</Footer>
+
+			</Layout>
 		)
 	}
 }

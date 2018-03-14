@@ -23,7 +23,7 @@ class LoginForm extends Component {
 					this.setState({
 						loading: false
 					})
-					if(values.username === "007@00000" && values.password === "123456") {
+					if(values.username === "admin" && values.password === "123456") {
 						// Modal.success({
 						//     title: '提示',
 						//     content: values.username + ' 登录成功',
